@@ -8,7 +8,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
       <div className="max-w-3xl w-full">
         {/* Welcome Message */}
         <div className="text-center mb-12">
-          <h1 className="mb-4">Chào mẹ, chúc mẹ một ngày tốt lành! 🌸</h1>
+          <h1 className="mb-4">Chào mẹ Mận, chúc mẹ một ngày tốt lành! 🌸</h1>
           <p className="text-muted-foreground text-xl">Hôm nay mẹ cần tính gì?</p>
         </div>
 

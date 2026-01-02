@@ -154,7 +154,7 @@ export function GoldCalculator() {
           type="text"
           value={purchasePriceStr}
           onChange={(e) => handleMoneyChange(e.target.value, setPurchasePriceStr)}
-          placeholder="Nhập giá vàng lúc mẹ mua (Nếu không nhớ thì mẹ không cần nhập)"
+          placeholder="Nếu không nhớ thì mẹ không cần nhập"
           className="w-full px-4 py-3 rounded-lg bg-input-background border-2 border-border text-lg font-semibold outline-none focus:border-primary"
         />
         <p className="mt-1 text-primary text-xs font-medium min-h-[1rem]">
