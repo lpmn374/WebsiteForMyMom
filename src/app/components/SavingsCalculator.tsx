@@ -202,9 +202,12 @@ export function SavingsCalculator() {
           </p>
           
           <div className="space-y-2 text-sm pt-4 border-t border-primary/20">
-            <div className="flex justify-between">
-              <span>Tiền gốc ban đầu:</span>
-              <span className="font-semibold">{numericPrincipal.toLocaleString('vi-VN')}₫</span>
+            <div className="flex justify-between items-start">
+              <span className="text-muted-foreground">Tiền gốc ban đầu:</span>
+              <div className="text-right">
+                <span className="font-semibold block">{numericPrincipal.toLocaleString('vi-VN')}₫</span>
+                <span className="text-[11px] italic text-muted-foreground">({formatToWords(numericPrincipal)})</span>
+              </div>
             </div>
             <div className="flex justify-between text-lg font-bold text-foreground pt-2 border-t border-dashed">
               <span>Tổng nhận (Gốc + Lãi):</span>
