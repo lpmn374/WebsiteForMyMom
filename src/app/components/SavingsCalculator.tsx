@@ -137,7 +137,7 @@ export function SavingsCalculator() {
             inputMode="decimal" // Để điện thoại hiện bàn phím số có dấu ngăn cách
             value={interestRate}
             onChange={(e) => setInterestRate(e.target.value.replace(/,/g, '.'))} // Tự động đổi phẩy thành chấm ngay khi nhập
-            placeholder="Ví dụ: 4.75 hoặc 4,75"
+            placeholder="Ví dụ: 4.75"
             className="w-full px-4 py-4 rounded-lg bg-input-background border-2 border-border focus:border-primary text-xl font-semibold outline-none"
           />
           <div className="flex flex-wrap gap-2 mt-3">
