@@ -13,7 +13,7 @@ Trang web hiện tại không bao gồm lưu trữ dữ liệu để đảm bả
 Hiểu được những trở ngại của người lớn tuổi khi sử dụng công nghệ, tôi đã tích hợp các tính năng:
 
 * **Đọc số thành chữ:** Mẹ thường khó phân biệt các con số lớn (như 100.000.000 hay 10.000.000). Website luôn hiển thị số tiền bằng chữ tiếng Việt đi kèm để mẹ dễ nhận biết.
-* **Nút cộng giá trị nhanh:** Thay vì phải nhập từng số 0 dễ nhầm lẫn, tôi đã thêm các nút như `+ 100 Triệu`, `+ 10 Triệu`, `+ 1 Triệu`,... để mẹ thao tác nhanh và chính xác.
+* **Nút cộng giá trị nhanh:** Thay vì phải nhập từng số 0 dễ nhầm lẫn, tôi đã thêm các nút như `+ 100 Triệu`, `+ 10 Triệu`, `+ 1 Triệu`,... để mẹ thao tác nhanh và chính xác. Tất nhiên, bạn vẫn hoàn toàn có thể nhập từ bàn phím.
 * **Giao diện trực quan:** Các nút bấm to, rõ ràng và ngôn ngữ gần gũi.
 
 > *Công cụ hỗ trợ: **Figma** (thiết kế), **Google Gemini** (tối ưu mã nguồn).*
