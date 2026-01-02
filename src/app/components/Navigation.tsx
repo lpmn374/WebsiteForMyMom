@@ -90,13 +90,13 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
               {showFunctionsMenu && (
                 <div className="absolute top-full mt-2 left-0 bg-card shadow-xl rounded-lg border border-border min-w-[250px] overflow-hidden z-50">
                   <button
-                    onClick={() => { onNavigate('savings'); setShowFunctionsMenu(false); }}
+                    onMouseDown={() => { onNavigate('savings'); setShowFunctionsMenu(false); }}
                     className="w-full text-left px-4 py-4 hover:bg-secondary transition-colors border-b border-border"
                   >
                     💰 Lãi suất tiết kiệm ngân hàng
                   </button>
                   <button
-                    onClick={() => { onNavigate('gold'); setShowFunctionsMenu(false); }}
+                    onMouseDown={() => { onNavigate('gold'); setShowFunctionsMenu(false); }}
                     className="w-full text-left px-4 py-4 hover:bg-secondary transition-colors"
                   >
                     ✨ Lợi nhuận vàng
