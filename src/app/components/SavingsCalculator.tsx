@@ -59,6 +59,8 @@ export function SavingsCalculator() {
 
   const calculateProfit = () => {
     const p = numericPrincipal;
+    // Chuyển đổi mọi dấu phẩy thành dấu chấm trước khi parseFloat
+    const safeInterest = interestRate.toString().replace(/,/g, '.');
     const r = parseFloat(interestRate);
     const t = parseFloat(timeValue);
 
@@ -131,11 +133,11 @@ export function SavingsCalculator() {
         <div>
           <label className="block mb-2 font-medium text-lg">Lãi Suất (%/năm)</label>
           <input
-            type="number"
-            step="0.01"
+            type="text" // Đổi từ number sang text để nhận được cả dấu phẩy
+            inputMode="decimal" // Để điện thoại hiện bàn phím số có dấu ngăn cách
             value={interestRate}
-            onChange={(e) => setInterestRate(e.target.value)}
-            placeholder="Ví dụ: 4.75"
+            onChange={(e) => setInterestRate(e.target.value.replace(/,/g, '.'))} // Tự động đổi phẩy thành chấm ngay khi nhập
+            placeholder="Ví dụ: 4.75 hoặc 4,75"
             className="w-full px-4 py-4 rounded-lg bg-input-background border-2 border-border focus:border-primary text-xl font-semibold outline-none"
           />
           <div className="flex flex-wrap gap-2 mt-3">
