@@ -1,11 +1,64 @@
+# Website nhỏ dành cho mẹ tôi
 
-  # Responsive Profit Calculator Website
+Một ứng dụng web đơn giản, tiện lợi được thiết kế riêng để giúp mẹ tôi tính toán các khoản tiết kiệm và lợi nhuận từ vàng một cách dễ dàng nhất.
 
-  This is a code bundle for Responsive Profit Calculator Website. The original project is available at https://www.figma.com/design/BHXjPsZkjYi7GXG7i3THhd/Responsive-Profit-Calculator-Website.
+## 🌟 Giới thiệu
 
-  ## Running the code
+Mẹ tôi thường gặp khó khăn trong việc tính toán lãi suất gửi tiết kiệm ngân hàng và lợi nhuận khi mua bán vàng. Vì vậy, tôi đã xây dựng website này với tiêu chí tối giản và hiệu quả.
 
-  Run `npm i` to install the dependencies.
+Trang web hiện tại không bao gồm lưu trữ dữ liệu để đảm bảo sự nhẹ nhàng, chỉ tập trung hoàn toàn vào các công cụ tính toán mà mẹ cần. Trong tương lai, tôi sẽ mở rộng thêm chức năng nếu mẹ có thêm nhu cầu mới.
 
-  Run `npm run dev` to start the development server.
-  
+## ✨ Điểm đặc biệt dành riêng cho mẹ
+
+Hiểu được những trở ngại của người lớn tuổi khi sử dụng công nghệ, tôi đã tích hợp các tính năng:
+
+* **Đọc số thành chữ:** Mẹ thường khó phân biệt các con số lớn (như 100.000.000 hay 10.000.000). Website luôn hiển thị số tiền bằng chữ tiếng Việt đi kèm để mẹ dễ nhận biết.
+* **Nút cộng giá trị nhanh:** Thay vì phải nhập từng số 0 dễ nhầm lẫn, tôi đã thêm các nút như `+ 100 Triệu`, `+ 10 Triệu`, `+ 1 Triệu`,... để mẹ thao tác nhanh và chính xác.
+* **Giao diện trực quan:** Các nút bấm to, rõ ràng và ngôn ngữ gần gũi.
+
+> *Công cụ hỗ trợ: **Figma** (thiết kế), **Google Gemini** (tối ưu mã nguồn).*
+
+---
+
+## 🚀 Cách chạy dự án trên máy tính
+
+Nếu bạn muốn chạy thử mã nguồn này ở môi trường local, hãy làm theo các bước sau:
+
+1. **Cài đặt thư viện:**
+```bash
+npm install
+
+```
+
+
+2. **Khởi động server development:**
+```bash
+npm run dev
+
+```
+
+
+3. **Truy cập:**
+Mở trình duyệt và truy cập vào đường dẫn được hiển thị ở Terminal (thường là `http://localhost:5173/`).
+
+---
+
+## 🔗 Truy cập trực tuyến
+
+Mẹ và mọi người có thể sử dụng website trực tiếp tại đây:
+👉 **[https://phamman.vercel.app/](https://phamman.vercel.app/)**
+
+<p align="center">
+<img width="1918" height="896" alt="image" src="https://github.com/user-attachments/assets/47bf3644-138c-43f9-8198-3abad95f955d" />
+</p>
+<p align="center">
+  <b>Giao diện trang chủ của Website</b>
+</p>
+
+---
+<div align="center">
+*Made with ❤️ for Mom*
+</div>
+<div align="center">
+  <b>Phát triển bởi Lê Phạm Mỹ Ngọc • © 2025</b>
+</div>
