@@ -104,6 +104,7 @@ export function GoldCalculator() {
   };
 
   const moneyButtons = [
+    { label: '1 Tỷ', value: 1_000_000_000 },
     { label: '100 Triệu', value: 100_000_000 },
     { label: '10 Triệu', value: 10_000_000 },
     { label: '1 Triệu', value: 1_000_000 },

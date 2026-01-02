@@ -103,13 +103,14 @@ export function SavingsCalculator() {
         </p>
 
         <div className="flex flex-wrap gap-2 mt-3">
-          {[100_000_000, 10_000_000, 1_000_000, 100_000, 10_000, 1_000, 100].map((amt) => (
+          {[1_000_000_000, 100_000_000, 10_000_000, 1_000_000, 100_000, 10_000, 1_000, 100].map((amt) => (
             <button
               key={amt}
               onClick={() => addAmount(amt)}
               className="px-3 py-2 bg-secondary text-secondary-foreground rounded-md text-sm hover:bg-primary hover:text-white transition-colors border border-border font-medium"
             >
               + {
+                amt >= 1_000_000_000 ? (amt/1_000_000_000) + ' Tỷ' :
                 amt >= 1_000_000 ? (amt/1_000_000) + ' Triệu' : 
                 amt >= 1_000 ? (amt/1_000) + ' Ngàn' : 
                 amt + ' Đồng'
