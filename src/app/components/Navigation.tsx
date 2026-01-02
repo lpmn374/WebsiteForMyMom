@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 
+
 interface NavigationProps {
   currentPage: string;
   onNavigate: (page: string) => void;
