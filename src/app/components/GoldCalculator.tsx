@@ -43,10 +43,17 @@ export function GoldCalculator() {
   const numericPurchasePrice = Number(purchasePriceStr.replace(/\./g, ''));
   const numericSellingPrice = Number(sellingPriceStr.replace(/\./g, ''));
 
+  // Xử lý chỉ nhập số cho các ô tiền tệ
   const handleMoneyChange = (val: string, setter: (v: string) => void) => {
     const onlyNums = val.replace(/\D/g, '');
     const formatted = onlyNums.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     setter(formatted);
+  };
+
+  // Xử lý chỉ nhập số cho Lượng, Phân, Chỉ (ngăn chặn dấu +, -, chữ)
+  const handleWeightChange = (val: string, setter: (v: string) => void) => {
+    const onlyNums = val.replace(/\D/g, ''); // Loại bỏ tất cả ký tự không phải số
+    setter(onlyNums);
   };
 
   const addMoney = (amount: number, currentStr: string, setter: (v: string) => void) => {
@@ -57,7 +64,7 @@ export function GoldCalculator() {
   };
 
   const addWeight = (val: string, setter: (v: string) => void) => {
-    const current = parseFloat(val) || 0;
+    const current = parseInt(val) || 0;
     setter((current + 1).toString());
   };
 
@@ -130,9 +137,10 @@ export function GoldCalculator() {
             <div key={item.id}>
               <label className="block text-xs text-muted-foreground mb-1 uppercase font-bold">{item.label}</label>
               <input
-                type="number"
+                type="text"
+                inputMode="numeric"
                 value={item.val}
-                onChange={(e) => item.set(e.target.value)}
+                onChange={(e) => handleWeightChange(e.target.value, item.set)}
                 placeholder="0"
                 className="w-full px-3 py-3 rounded-lg bg-input-background border-2 border-border focus:border-primary text-center font-bold text-lg outline-none"
               />
@@ -145,7 +153,7 @@ export function GoldCalculator() {
             </div>
           ))}
         </div>
-        <button onClick={() => { setLuong(''); setPhan(''); setChi(''); }} className= "mt-3 w-full py-1 text-destructive text-xs border border-destructive/30 rounded font-medium">Xóa trọng lượng</button>
+        <button onClick={() => { setLuong(''); setPhan(''); setChi(''); }} className="mt-3 w-full py-1 text-destructive text-xs border border-destructive/30 rounded font-medium">Xóa trọng lượng</button>
       </div>
 
       {/* Giá Mua Vào */}
@@ -153,6 +161,7 @@ export function GoldCalculator() {
         <label className="block mb-2 font-medium">Giá Mua vào mỗi Lượng (₫)</label>
         <input
           type="text"
+          inputMode="numeric"
           value={purchasePriceStr}
           onChange={(e) => handleMoneyChange(e.target.value, setPurchasePriceStr)}
           placeholder="Nếu không nhớ thì mẹ không cần nhập"
@@ -176,6 +185,7 @@ export function GoldCalculator() {
         <label className="block mb-2 font-medium">Giá Bán ra mỗi Lượng (₫)</label>
         <input
           type="text"
+          inputMode="numeric"
           value={sellingPriceStr}
           onChange={(e) => handleMoneyChange(e.target.value, setSellingPriceStr)}
           placeholder="Ví dụ: 85.000.000"
