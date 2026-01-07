@@ -60,5 +60,5 @@ Mẹ và mọi người có thể sử dụng website trực tiếp tại đây:
 *Made with ❤️ for Mom*
 </div>
 <div align="center">
-  <b>Phát triển bởi Lê Phạm Mỹ Ngọc • © 2025</b>
+  <b>Phát triển bởi Lê Phạm Mỹ Ngọc • © 2026</b>
 </div>
