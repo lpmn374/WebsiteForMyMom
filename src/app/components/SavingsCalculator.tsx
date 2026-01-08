@@ -29,30 +29,28 @@ export function SavingsCalculator() {
   const [interestRate, setInterestRate] = useState<string>('');
   const [timeValue, setTimeValue] = useState<string>('');
   const [timeUnit, setTimeUnit] = useState<'days' | 'months' | 'years'>('months');
-  const [result, setResult] = useState<number | null>(null);
+  const [resultData, setResultData] = useState<{
+    interest: number;
+    startDate: string;
+    endDate: string;
+    daysCount: number;
+  } | null>(null);
 
   const numericPrincipal = Number(principalStr.replace(/\./g, ''));
 
-  // Xử lý tiền gốc (Chỉ cho phép số)
   const handlePrincipalChange = (val: string) => {
     const onlyNums = val.replace(/\D/g, '');
     const formatted = onlyNums.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     setPrincipalStr(formatted);
   };
 
-  // Xử lý lãi suất (Cho phép số và 1 dấu chấm/phẩy)
   const handleInterestChange = (val: string) => {
-    // Chỉ cho phép số và dấu chấm/phẩy, loại bỏ chữ và dấu trừ
-    let cleanVal = val.replace(/[^0-9.,]/g, '');
-    // Chuyển phẩy thành chấm để xử lý logic
-    cleanVal = cleanVal.replace(/,/g, '.');
-    // Chỉ cho phép tối đa một dấu chấm
+    let cleanVal = val.replace(/[^0-9.,]/g, '').replace(/,/g, '.');
     const parts = cleanVal.split('.');
     if (parts.length > 2) cleanVal = parts[0] + '.' + parts.slice(1).join('');
     setInterestRate(cleanVal);
   };
 
-  // Xử lý thời gian (Chỉ cho phép số nguyên dương)
   const handleTimeChange = (val: string) => {
     const onlyNums = val.replace(/\D/g, '');
     setTimeValue(onlyNums);
@@ -69,34 +67,51 @@ export function SavingsCalculator() {
   };
 
   const addTime = (val: number) => {
-    const current = parseFloat(timeValue) || 0;
+    const current = parseInt(timeValue) || 0;
     setTimeValue((current + val).toString());
   };
 
   const calculateProfit = () => {
     const p = numericPrincipal;
     const r = parseFloat(interestRate);
-    const t = parseFloat(timeValue);
+    const t = parseInt(timeValue);
 
     if (isNaN(p) || isNaN(r) || isNaN(t) || p <= 0 || r <= 0 || t <= 0) {
       alert('Mẹ ơi, mẹ nhập đủ số tiền, lãi suất và thời gian nhé!');
       return;
     }
 
-    let timeInYears = 0;
-    if (timeUnit === 'days') timeInYears = t / 365;
-    else if (timeUnit === 'months') timeInYears = t / 12;
-    else timeInYears = t;
+    const startDate = new Date(); // Ngày gửi là hôm nay
+    const endDate = new Date();
 
-    const interest = (p * r * timeInYears) / 100;
-    setResult(interest);
+    if (timeUnit === 'days') {
+      endDate.setDate(startDate.getDate() + t);
+    } else if (timeUnit === 'months') {
+      endDate.setMonth(startDate.getMonth() + t);
+    } else {
+      endDate.setFullYear(startDate.getFullYear() + t);
+    }
+
+    // Tính số ngày thực tế giữa 2 ngày
+    const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
+    const daysCount = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    // Công thức chuẩn ngân hàng: Lãi = (Số tiền * Lãi suất * Số ngày thực tế) / 365
+    const interest = (p * (r / 100) * daysCount) / 365;
+
+    setResultData({
+      interest,
+      startDate: startDate.toLocaleDateString('vi-VN'),
+      endDate: endDate.toLocaleDateString('vi-VN'),
+      daysCount
+    });
   };
 
   const reset = () => {
     setPrincipalStr('');
     setInterestRate('');
     setTimeValue('');
-    setResult(null);
+    setResultData(null);
   };
 
   return (
@@ -128,7 +143,6 @@ export function SavingsCalculator() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Lãi Suất */}
         <div>
           <label className="block mb-2 font-medium text-lg">Lãi Suất (%/năm)</label>
           <input
@@ -146,7 +160,6 @@ export function SavingsCalculator() {
           </div>
         </div>
 
-        {/* Thời Gian Gửi */}
         <div>
           <label className="block mb-2 font-medium text-lg">Thời Gian Gửi</label>
           <div className="flex gap-2">
@@ -158,7 +171,7 @@ export function SavingsCalculator() {
               placeholder="0"
               className="w-full px-4 py-4 rounded-lg bg-input-background border-2 border-border focus:border-primary text-xl font-semibold outline-none"
             />
-            <select value={timeUnit} onChange={(e) => setTimeUnit(e.target.value as 'days' | 'months' | 'years')} className="px-4 py-4 rounded-lg bg-input-background border-2 border-border font-medium text-lg">
+            <select value={timeUnit} onChange={(e) => setTimeUnit(e.target.value as 'days' | 'months' | 'years')} className="px-4 py-4 rounded-lg bg-input-background border-2 border-border font-medium text-lg outline-none">
               <option value="days">Ngày</option>
               <option value="months">Tháng</option>
               <option value="years">Năm</option>
@@ -177,24 +190,37 @@ export function SavingsCalculator() {
         <button onClick={reset} className="flex-1 py-4 bg-secondary text-secondary-foreground rounded-xl font-medium border border-border">Làm lại</button>
       </div>
 
-      {result !== null && (
+      {resultData !== null && (
         <div className="mt-6 p-6 bg-primary/5 rounded-2xl border-2 border-primary shadow-inner">
-          <p className="text-center text-muted-foreground font-medium mb-1">Tiền lãi nhận được:</p>
-          <p className="text-center text-4xl font-bold text-primary mb-1">{Math.round(result).toLocaleString('vi-VN')}₫</p>
-          <p className="text-center text-primary font-medium mb-4 italic text-sm">({formatToWords(result)})</p>
-          <div className="space-y-2 text-sm pt-4 border-t border-primary/20">
-            <div className="flex justify-between items-start">
-              <span className="text-muted-foreground">Tiền gốc ban đầu:</span>
-              <div className="text-right">
-                <span className="font-semibold block">{numericPrincipal.toLocaleString('vi-VN')}₫</span>
-                <span className="text-[11px] italic text-muted-foreground">({formatToWords(numericPrincipal)})</span>
-              </div>
+          <p className="text-center text-muted-foreground font-medium mb-1">Tiền lãi dự kiến nhận được:</p>
+          <p className="text-center text-4xl font-bold text-primary mb-1">{Math.round(resultData.interest).toLocaleString('vi-VN')}₫</p>
+          <p className="text-center text-primary font-medium mb-4 italic text-sm">({formatToWords(resultData.interest)})</p>
+          
+          <div className="space-y-3 text-sm pt-4 border-t border-primary/20">
+            <div className="flex justify-between bg-white/50 p-2 rounded-lg">
+              <span className="text-muted-foreground">Ngày gửi:</span>
+              <span className="font-bold">{resultData.startDate}</span>
             </div>
-            <div className="flex justify-between text-lg font-bold text-foreground pt-2 border-t border-dashed">
-              <span>Tổng nhận (Gốc + Lãi):</span>
-              <div className="text-right">
-                <span className="text-primary block">{(Math.round(numericPrincipal + result)).toLocaleString('vi-VN')}₫</span>
-                <span className="text-xs font-medium text-primary italic">({formatToWords(numericPrincipal + result)})</span>
+            <div className="flex justify-between bg-white/50 p-2 rounded-lg">
+              <span className="text-muted-foreground">Ngày đáo hạn:</span>
+              <span className="font-bold text-primary">{resultData.endDate}</span>
+            </div>
+            <div className="flex justify-between p-2">
+              <span className="text-muted-foreground">Số ngày thực tế:</span>
+              <span className="font-semibold">{resultData.daysCount} ngày</span>
+            </div>
+            
+            <div className="border-t border-dashed border-primary/30 pt-3">
+              <div className="flex justify-between items-start">
+                <span className="text-muted-foreground">Tiền gốc:</span>
+                <span className="font-semibold">{numericPrincipal.toLocaleString('vi-VN')}₫</span>
+              </div>
+              <div className="flex justify-between text-lg font-bold text-foreground pt-2">
+                <span>Tổng nhận:</span>
+                <div className="text-right">
+                  <span className="text-primary block">{(Math.round(numericPrincipal + resultData.interest)).toLocaleString('vi-VN')}₫</span>
+                  <span className="text-xs font-medium text-primary italic">({formatToWords(numericPrincipal + resultData.interest)})</span>
+                </div>
               </div>
             </div>
           </div>
