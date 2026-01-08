@@ -16,7 +16,15 @@ Hiểu được những trở ngại của người lớn tuổi khi sử dụng
 * **Nút cộng giá trị nhanh:** Thay vì phải nhập từng số 0 dễ nhầm lẫn, tôi đã thêm các nút như `+ 100 Triệu`, `+ 10 Triệu`, `+ 1 Triệu`,... để mẹ thao tác nhanh và chính xác. Tất nhiên, bạn vẫn hoàn toàn có thể nhập từ bàn phím.
 * **Giao diện trực quan:** Các nút bấm to, rõ ràng và ngôn ngữ gần gũi.
 
-> *Công cụ hỗ trợ: **Figma** (thiết kế), **Google Gemini** (tối ưu mã nguồn).*
+
+## 🚀 Quy trình phát triển (Vibe Coding Process)
+
+Dự án này được xây dựng theo phương pháp "Vibe Coding" - tập trung vào ý tưởng và điều phối công nghệ thay vì viết code thủ công truyền thống:
+
+* **Thiết kế (UI/UX):** Sử dụng **Figma AI** để tạo khung giao diện, phối màu và cấu trúc hệ thống Navigation.
+* **Phát triển Logic (Development):** Sử dụng **Google Gemini** để hiện thực hóa các tính năng phức tạp (tính lãi suất thực tế, xử lý vàng, định dạng tiền tệ) và fix bug.
+* **Môi trường lập trình:** **Visual Studio Code** đóng vai trò là nơi kiểm tra, tinh chỉnh mã nguồn và quản lý mã nguồn qua Git.
+* **Triển khai (Deployment):** Tự động hóa việc xuất bản trang web qua **Vercel**.
 
 ---
 
