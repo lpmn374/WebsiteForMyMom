@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
 
-
 interface NavigationProps {
   currentPage: string;
   onNavigate: (page: string) => void;
@@ -15,7 +14,7 @@ const SEARCHABLE_PAGES = [
   {
     id: 'gold',
     title: 'Lợi nhuận vàng',
-    tags: ['vàng', 'giá vàng', 'bán vàng', 'mua vàng', 'lợi nhuận', 'vàng miếng', 'nhẫn']
+    tags: ['vàng', 'giá vàng', 'bán vàng', 'mua vàng', 'lợi nhuận', 'vàng miếng', 'nhẫn', 'gold']
   },
   {
     id: 'home',
@@ -28,7 +27,6 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
   const [showFunctionsMenu, setShowFunctionsMenu] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Lọc danh sách gợi ý khi mẹ đang gõ
   const suggestions = useMemo(() => {
     const query = searchQuery.toLowerCase().trim();
     if (query.length < 1) return [];
@@ -46,6 +44,15 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
     }
   };
 
+  // Hàm xử lý đóng menu khi nhấn ra ngoài
+  const handleBlur = (e: React.FocusEvent) => {
+    // Nếu phần tử tiếp theo được nhấn (relatedTarget) nằm bên trong menu, 
+    // thì không đóng menu ngay để kịp nhận sự kiện click
+    if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+      setShowFunctionsMenu(false);
+    }
+  };
+
   return (
     <nav className="bg-card shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
@@ -54,7 +61,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
           {/* Logo */}
           <div 
             className="flex items-center gap-3 cursor-pointer shrink-0" 
-            onClick={() => onNavigate('home')}
+            onClick={() => { onNavigate('home'); setShowFunctionsMenu(false); }}
           >
             <div className="w-10 h-10 flex items-center justify-center overflow-hidden">
               <img src="/Logo.png" alt="Logo" className="w-full h-full object-contain" />
@@ -65,7 +72,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
           <div className="flex items-center gap-4 flex-1">
             {/* Trang chủ */}
             <button
-              onClick={() => onNavigate('home')}
+              onClick={() => { onNavigate('home'); setShowFunctionsMenu(false); }}
               className={`px-4 py-2 rounded-lg transition-colors whitespace-nowrap ${
                 currentPage === 'home' ? 'bg-primary text-primary-foreground' : 'text-foreground hover:bg-secondary'
               }`}
@@ -73,8 +80,8 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
               Trang chủ
             </button>
 
-            {/* Công năng */}
-            <div className="relative">
+            {/* Công năng - Bọc trong 1 thẻ div có onBlur */}
+            <div className="relative" onBlur={handleBlur}>
               <button
                 onClick={() => setShowFunctionsMenu(!showFunctionsMenu)}
                 className={`px-4 py-2 rounded-lg transition-colors flex items-center gap-1 whitespace-nowrap ${
@@ -88,16 +95,16 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
               </button>
 
               {showFunctionsMenu && (
-                <div className="absolute top-full mt-2 left-0 bg-card shadow-xl rounded-lg border border-border min-w-[250px] overflow-hidden z-50">
+                <div className="absolute top-full mt-2 left-0 bg-card shadow-xl rounded-lg border border-border min-w-[250px] overflow-hidden z-50 animate-in fade-in zoom-in duration-150">
                   <button
-                    onMouseDown={() => { onNavigate('savings'); setShowFunctionsMenu(false); }}
-                    className="w-full text-left px-4 py-4 hover:bg-secondary transition-colors border-b border-border"
+                    onClick={() => { onNavigate('savings'); setShowFunctionsMenu(false); }}
+                    className="w-full text-left px-4 py-4 hover:bg-secondary transition-colors border-b border-border flex items-center gap-2"
                   >
                     💰 Lãi suất tiết kiệm ngân hàng
                   </button>
                   <button
-                    onMouseDown={() => { onNavigate('gold'); setShowFunctionsMenu(false); }}
-                    className="w-full text-left px-4 py-4 hover:bg-secondary transition-colors"
+                    onClick={() => { onNavigate('gold'); setShowFunctionsMenu(false); }}
+                    className="w-full text-left px-4 py-4 hover:bg-secondary transition-colors flex items-center gap-2"
                   >
                     ✨ Lợi nhuận vàng
                   </button>
@@ -105,19 +112,19 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
               )}
             </div>
 
-            {/* Search Bar - Trả về thiết kế cũ nhưng thêm Gợi ý */}
+            {/* Search Bar */}
             <div className="relative hidden lg:block ml-auto">
               <form onSubmit={handleSearch}>
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
+                  onBlur={() => setTimeout(() => setSearchQuery(''), 200)} // Đóng gợi ý sau khi mất focus
                   placeholder="Tìm kiếm..."
                   className="px-4 py-2 rounded-lg bg-input-background border border-border focus:outline-none focus:ring-2 focus:ring-ring w-48 transition-all"
                 />
               </form>
 
-              {/* Bảng gợi ý khi gõ */}
               {suggestions.length > 0 && (
                 <div className="absolute top-full right-0 mt-1 bg-card border border-border rounded-lg shadow-lg w-64 overflow-hidden z-[60]">
                   {suggestions.map((page) => (
